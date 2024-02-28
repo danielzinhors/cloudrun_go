@@ -11,12 +11,12 @@ Execute com docker compose:
 docker compose up
 ```
 
-Execute a solicitação atraves do endpoint http://localhost:8080/?cep=69400970 utilizando o Verbo Get
+Execute a solicitação atraves do endpoint http://localhost:8080/?cep=01153000 utilizando o Verbo Get
 
 Ex: 
 
 ```bash
-curl --request GET --url 'http://localhost:8080/?cep=69400970'
+curl --request GET --url 'http://localhost:8080/?cep=01153000'
 ```
 
 # Na produção usar o enviroment 
