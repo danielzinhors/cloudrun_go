@@ -18,39 +18,39 @@ import (
 )
 
 // MockGetTemperatureByCepUseCase is a mock of GetTemperatureByCepUseCase interface.
-type MockGetTemperatureByCepUseCase struct {
+type MockGetTempUseCase struct {
 	ctrl     *gomock.Controller
-	recorder *MockGetTemperatureByCepUseCaseMockRecorder
+	recorder *MockGetTempUseCaseMockRecorder
 }
 
 // MockGetTemperatureByCepUseCaseMockRecorder is the mock recorder for MockGetTemperatureByCepUseCase.
-type MockGetTemperatureByCepUseCaseMockRecorder struct {
-	mock *MockGetTemperatureByCepUseCase
+type MockGetTempUseCaseMockRecorder struct {
+	mock *MockGetTempUseCase
 }
 
 // NewMockGetTemperatureByCepUseCase creates a new mock instance.
-func NewMockGetTemperatureByCepUseCase(ctrl *gomock.Controller) *MockGetTemperatureByCepUseCase {
-	mock := &MockGetTemperatureByCepUseCase{ctrl: ctrl}
-	mock.recorder = &MockGetTemperatureByCepUseCaseMockRecorder{mock}
+func NewMockGetTempUseCase(ctrl *gomock.Controller) *MockGetTempUseCase {
+	mock := &MockGetTempUseCase{ctrl: ctrl}
+	mock.recorder = &MockGetTempUseCaseMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockGetTemperatureByCepUseCase) EXPECT() *MockGetTemperatureByCepUseCaseMockRecorder {
+func (m *MockGetTempUseCase) EXPECT() *MockGetTempUseCaseMockRecorder {
 	return m.recorder
 }
 
 // Execute mocks base method.
-func (m *MockGetTemperatureByCepUseCase) Execute(ctx context.Context, input *usecases.TemperatureByCepInput) (*usecases.TemperatureByCepOutput, error) {
+func (m *MockGetTempUseCase) Execute(ctx context.Context, input *usecases.TempInput) (*usecases.TempOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(*usecases.TemperatureByCepOutput)
+	ret0, _ := ret[0].(*usecases.TempOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
-func (mr *MockGetTemperatureByCepUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
+func (mr *MockGetTempUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockGetTemperatureByCepUseCase)(nil).Execute), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockGetTempUseCase)(nil).Execute), ctx, input)
 }

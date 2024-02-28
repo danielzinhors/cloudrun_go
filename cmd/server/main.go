@@ -25,9 +25,9 @@ func main() {
 		),
 	)
 
-	r.Get("/sol", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/ensolarado", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("OK"))
+		w.Write([]byte("Sem chances de chuva"))
 	})
 
 	r.Get("/", getTempHandler.Handle)

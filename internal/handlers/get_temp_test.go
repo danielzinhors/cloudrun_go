@@ -16,8 +16,8 @@ import (
 
 type GetTempHandlerTestSuite struct {
 	suite.Suite
-	controller                     *gomock.Controller
-	getTemperatureByCepUseCaseMock *mocks.MockGetTemperatureByCepUseCase
+	controller         *gomock.Controller
+	getTempUseCaseMock *mocks.MockGetTempUseCase
 }
 
 func TestGetTempHandlerTestSuite(t *testing.T) {
@@ -26,11 +26,11 @@ func TestGetTempHandlerTestSuite(t *testing.T) {
 
 func (s *GetTempHandlerTestSuite) SetupTest() {
 	s.controller = gomock.NewController(s.T())
-	s.getTemperatureByCepUseCaseMock = mocks.NewMockGetTemperatureByCepUseCase(s.controller)
+	s.getTempUseCaseMock = mocks.NewMockGetTempUseCase(s.controller)
 }
 
 func (s *GetTempHandlerTestSuite) TestNewGetTempHandler() {
-	handler := NewGetTemperatureByCepHandler(s.getTemperatureByCepUseCaseMock)
+	handler := NewGetTempHandler(s.getTempUseCaseMock)
 	assert.NotNil(s.T(), handler)
 }
 
@@ -49,7 +49,7 @@ func (s *GetTempHandlerTestSuite) TestHandleInvalidCeps() {
 		request := httptest.NewRequest("GET", url, nil)
 		recorder := httptest.NewRecorder()
 
-		handler := NewGetTemperatureByCepHandler(s.getTemperatureByCepUseCaseMock)
+		handler := NewGetTempHandler(s.getTempUseCaseMock)
 		handler.Handle(recorder, request)
 
 		response := recorder.Result()
@@ -64,13 +64,13 @@ func (s *GetTempHandlerTestSuite) TestHandleInvalidCeps() {
 
 func (s *GetTempHandlerTestSuite) TestHandleUseCaseErrZipcodeNotFound() {
 
-	s.getTemperatureByCepUseCaseMock.EXPECT().
+	s.getTempUseCaseMock.EXPECT().
 		Execute(gomock.Any(), gomock.Any()).Return(nil, errors.New("can not found zipcode"))
 
-	request := httptest.NewRequest("GET", "http://testing?cep=01451-000", nil)
+	request := httptest.NewRequest("GET", "http://testing?cep=96750-000", nil)
 	recorder := httptest.NewRecorder()
 
-	handler := NewGetTemperatureByCepHandler(s.getTemperatureByCepUseCaseMock)
+	handler := NewGetTempHandler(s.getTempUseCaseMock)
 	handler.Handle(recorder, request)
 
 	response := recorder.Result()
@@ -84,13 +84,13 @@ func (s *GetTempHandlerTestSuite) TestHandleUseCaseErrZipcodeNotFound() {
 
 func (s *GetTempHandlerTestSuite) TestHandleUseCaseErrGeneric() {
 
-	s.getTemperatureByCepUseCaseMock.EXPECT().
+	s.getTempUseCaseMock.EXPECT().
 		Execute(gomock.Any(), gomock.Any()).Return(nil, errors.New("generic error"))
 
-	request := httptest.NewRequest("GET", "http://testing?cep=01451-000", nil)
+	request := httptest.NewRequest("GET", "http://testing?cep=96750-000", nil)
 	recorder := httptest.NewRecorder()
 
-	handler := NewGetTemperatureByCepHandler(s.getTemperatureByCepUseCaseMock)
+	handler := NewGetTempHandler(s.getTempUseCaseMock)
 	handler.Handle(recorder, request)
 
 	response := recorder.Result()
@@ -113,10 +113,10 @@ func (s *GetTempHandlerTestSuite) TestHandleSuccess() {
 	request := httptest.NewRequest("GET", "http://testing?cep=01451-000", nil)
 	recorder := httptest.NewRecorder()
 
-	s.getTemperatureByCepUseCaseMock.EXPECT().
+	s.getTempUseCaseMock.EXPECT().
 		Execute(request.Context(), &usecases.TempInput{Cep: "01451-000"}).Return(useCaseOutput, nil)
 
-	handler := NewGetTemperatureByCepHandler(s.getTemperatureByCepUseCaseMock)
+	handler := NewGetTempHandler(s.getTempUseCaseMock)
 	handler.Handle(recorder, request)
 
 	response := recorder.Result()
