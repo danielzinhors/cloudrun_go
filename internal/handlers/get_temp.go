@@ -38,9 +38,9 @@ func (h *GetTempHandler) Handle(w http.ResponseWriter, r *http.Request) {
 	output, err := h.getTempUseCase.Execute(r.Context(), input)
 
 	if err != nil {
-		if err.Error() == "can not found zipcode" {
+		if err.Error() == "can not find zipcode" {
 			w.WriteHeader(404)
-			w.Write([]byte("can not found zipcode"))
+			w.Write([]byte("can not find zipcode"))
 		} else {
 			fmt.Printf("ERROR: %s\n", err.Error())
 			w.WriteHeader(500)

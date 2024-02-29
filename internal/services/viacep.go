@@ -55,6 +55,7 @@ func (s *ViaCepServiceImpl) QueryCep(ctx context.Context, cep string) (*ViaCepRe
 	}
 
 	body, err := io.ReadAll(response.Body)
+
 	if err != nil {
 		return nil, err
 	}
@@ -64,14 +65,16 @@ func (s *ViaCepServiceImpl) QueryCep(ctx context.Context, cep string) (*ViaCepRe
 		return nil, errors.New("ViaCEP API error")
 	}
 
-	viaCepResponse := ViaCepResponse{}
-	err = json.Unmarshal([]byte(body), &viaCepResponse)
-	if err != nil {
+	if response.StatusCode == 500 {
 		return nil, errors.New("invalid ViaCEP API response")
 	}
 
-	if viaCepResponse.Erro {
-		return nil, errors.New("can not found zipcode")
+	viaCepResponse := ViaCepResponse{}
+
+	err = json.Unmarshal([]byte(body), &viaCepResponse)
+
+	if (err != nil) || (viaCepResponse.Erro) {
+		return nil, errors.New("can not find zipcode")
 	}
 
 	return &viaCepResponse, nil

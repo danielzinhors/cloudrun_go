@@ -50,6 +50,7 @@ func (s *WeatherApiServiceImpl) QueryWeather(ctx context.Context, location strin
 	url := fmt.Sprintf("https://api.weatherapi.com/v1/current.json?%s", queryParams.Encode())
 
 	request, err := http.NewRequest("GET", url, nil)
+
 	if err != nil {
 		return nil, err
 	}
